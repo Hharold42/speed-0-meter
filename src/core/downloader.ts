@@ -15,7 +15,7 @@ const REDIRECT_STATUSES = new Set([301, 302, 303, 307, 308]);
 const DEFAULT_MAX_REDIRECTS = 5;
 
 const REQUEST_HEADERS = {
-  'User-Agent': 'speedtest-cli/1.0',
+  'User-Agent': 'speed-0-meter/1.0',
   // Без сжатия: считаем ровно то, что реально прошло по сети.
   'Accept-Encoding': 'identity',
   'Cache-Control': 'no-cache',

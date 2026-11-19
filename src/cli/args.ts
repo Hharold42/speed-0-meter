@@ -29,9 +29,9 @@ export class UsageError extends Error {
 }
 
 export const USAGE = `Использование:
-  speedtest <url> [параметры]     замер скорости скачивания из консоли
-  speedtest --self-test           демо на встроенном локальном сервере (без интернета)
-  speedtest serve [параметры]     HTTP-сервер с API и веб-интерфейсом
+  speed-0-meter <url> [параметры]     замер скорости скачивания из консоли
+  speed-0-meter --self-test           демо на встроенном локальном сервере (без интернета)
+  speed-0-meter serve [параметры]     HTTP-сервер с API и веб-интерфейсом
 
 Параметры замера:
   -n, --requests <N>    число запросов (по умолчанию ${DEFAULT_REQUESTS})
