@@ -1,8 +1,12 @@
 node_modules
 dist
+coverage
 .git
+.github
 .gitignore
 *.log
 README.md
+CONTRIBUTING.md
 Dockerfile
+docker-compose.yml
 .dockerignore
