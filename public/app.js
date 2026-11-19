@@ -42,7 +42,7 @@ let pollTimer = null;
 
 async function api(path, options = {}) {
   const headers = { Accept: 'application/json' };
-  const token = els.token.value.trim() || sessionStorage.getItem('speedtest-token');
+  const token = els.token.value.trim() || sessionStorage.getItem('speed-0-meter-token');
   if (token) headers.Authorization = `Bearer ${token}`;
   if (options.body) headers['Content-Type'] = 'application/json';
 
@@ -209,7 +209,7 @@ async function onSubmit(event) {
   event.preventDefault();
   showFormError('');
 
-  if (els.token.value.trim()) sessionStorage.setItem('speedtest-token', els.token.value.trim());
+  if (els.token.value.trim()) sessionStorage.setItem('speed-0-meter-token', els.token.value.trim());
 
   els.start.disabled = true;
   try {

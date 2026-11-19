@@ -2,7 +2,7 @@
 #   docker compose up --build
 # Токен для API (необязательно): SPEEDTEST_TOKEN=secret docker compose up --build
 services:
-  speedtest:
+  speed-0-meter:
     build: .
     command: ['serve', '--host', '0.0.0.0']
     ports:
