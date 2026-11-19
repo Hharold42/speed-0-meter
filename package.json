@@ -1,0 +1,29 @@
+{
+  "name": "speedtest-cli",
+  "version": "1.0.0",
+  "description": "Консольный замер скорости скачивания: N последовательных запросов к адресу",
+  "type": "module",
+  "main": "dist/cli.js",
+  "bin": {
+    "speedtest": "dist/bin.js"
+  },
+  "files": [
+    "dist",
+    "!dist/**/*.test.*"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/bin.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "pretest": "npm run build",
+    "test": "node --test \"dist/**/*.test.js\""
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^7.0.2"
+  }
+}
