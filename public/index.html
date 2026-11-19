@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Замер скорости скачивания</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="page-header">
+        <h1>Замер скорости скачивания</h1>
+        <p class="muted">
+          Сервер делает N последовательных запросов к адресу и считает среднее время, объём и
+          скорость.
+        </p>
+      </header>
+
+      <section class="card">
+        <form id="run-form" class="form" novalidate>
+          <label class="field field-wide">
+            <span>Адрес</span>
+            <input
+              id="url"
+              name="url"
+              type="url"
+              required
+              placeholder="https://example.com/big.jpg"
+            />
+          </label>
+          <label class="field">
+            <span>Запросов</span>
+            <input id="requests" name="requests" type="number" min="1" value="10" />
+          </label>
+          <label class="field">
+            <span>Таймаут, с</span>
+            <input id="timeout" name="timeout" type="number" min="1" max="60" value="30" />
+          </label>
+          <label class="field">
+            <span>Повторов</span>
+            <input id="retries" name="retries" type="number" min="0" max="3" value="0" />
+          </label>
+          <label class="field field-check">
+            <input id="warmup" name="warmup" type="checkbox" />
+            <span>Прогрев</span>
+          </label>
+          <label class="field field-wide">
+            <span>Токен (если сервер его требует)</span>
+            <input id="token" name="token" type="password" autocomplete="off" />
+          </label>
+          <div class="actions">
+            <button id="start" type="submit" class="btn btn-primary">Запустить замер</button>
+          </div>
+        </form>
+        <p id="form-error" class="error" role="alert" hidden></p>
+      </section>
+
+      <section id="current" class="card" hidden>
+        <div class="current-head">
+          <div>
+            <h2>Текущий замер</h2>
+            <p id="current-url" class="muted url"></p>
+          </div>
+          <div class="current-side">
+            <span id="current-status" class="badge"></span>
+            <button id="cancel" type="button" class="btn btn-danger" hidden>Отменить</button>
+          </div>
+        </div>
+
+        <div class="progress" aria-hidden="true">
+          <div id="progress-bar" class="progress-bar"></div>
+        </div>
+        <p id="progress-text" class="muted"></p>
+        <p id="current-error" class="error" hidden></p>
+
+        <div id="stats" class="stats"></div>
+
+        <h3>Время запросов</h3>
+        <div id="chart" class="chart" aria-label="Время запросов"></div>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Результат</th>
+              <th>Время, с</th>
+              <th>TTFB, с</th>
+              <th>Объём, МБ</th>
+              <th>Попыток</th>
+            </tr>
+          </thead>
+          <tbody id="results"></tbody>
+        </table>
+      </section>
+
+      <section class="card">
+        <h2>История</h2>
+        <ul id="history" class="history"></ul>
+        <p id="history-empty" class="muted">Замеров пока нет.</p>
+      </section>
+    </main>
+    <script src="/app.js" defer></script>
+  </body>
+</html>

@@ -1,29 +1,43 @@
 {
   "name": "speedtest-cli",
   "version": "1.0.0",
-  "description": "Консольный замер скорости скачивания: N последовательных запросов к адресу",
+  "description": "Замер скорости скачивания: консольная утилита и HTTP-сервер с веб-интерфейсом",
   "type": "module",
-  "main": "dist/cli.js",
+  "main": "dist/cli/cli.js",
   "bin": {
     "speedtest": "dist/bin.js"
   },
   "files": [
     "dist",
-    "!dist/**/*.test.*"
+    "!dist/**/*.test.*",
+    "!dist/testing",
+    "public"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
+    "build": "npm run clean && tsc -p tsconfig.json",
     "start": "node dist/bin.js",
+    "serve": "node dist/bin.js serve",
     "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "pretest": "npm run build",
-    "test": "node --test \"dist/**/*.test.js\""
+    "test": "node --test \"dist/**/*.test.js\"",
+    "test:coverage": "node --test --experimental-test-coverage \"dist/**/*.test.js\"",
+    "prepack": "npm run build"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "license": "MIT",
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/node": "^24.0.0",
-    "typescript": "^7.0.2"
+    "eslint": "^10.15.0",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.10.1",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.73.0"
   }
 }

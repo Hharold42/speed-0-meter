@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [22, 24]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run format:check
+      - run: npm run typecheck
+      - run: npm test
+      - name: Покрытие тестами
+        if: matrix.node == 24
+        run: npm run test:coverage
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Сборка образа
+        run: docker build -t speedtest-cli .
+      - name: Смоук-тест консольного режима
+        run: docker run --rm speedtest-cli --self-test -n 2 --no-color
+      - name: Смоук-тест серверного режима
+        run: |
+          docker run -d --name srv -p 3000:3000 speedtest-cli serve --host 0.0.0.0
+          for i in $(seq 1 20); do
+            curl -fsS http://localhost:3000/health && break
+            sleep 0.5
+          done
+          curl -fsS http://localhost:3000/health
+          docker rm -f srv

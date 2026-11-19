@@ -1,0 +1,18 @@
+import js from '@eslint/js';
+import prettier from 'eslint-config-prettier';
+import tseslint from 'typescript-eslint';
+
+export default tseslint.config(
+  { ignores: ['dist/', 'node_modules/', 'coverage/', 'public/'] },
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
+  {
+    rules: {
+      '@typescript-eslint/consistent-type-imports': 'error',
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      eqeqeq: ['error', 'always'],
+      'no-console': 'off',
+    },
+  },
+  prettier,
+);

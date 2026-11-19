@@ -1,0 +1,26 @@
+# Серверный режим: веб-интерфейс и API на http://localhost:3000
+#   docker compose up --build
+# Токен для API (необязательно): SPEEDTEST_TOKEN=secret docker compose up --build
+services:
+  speedtest:
+    build: .
+    command: ['serve', '--host', '0.0.0.0']
+    ports:
+      - '3000:3000'
+    environment:
+      SPEEDTEST_TOKEN: ${SPEEDTEST_TOKEN:-}
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:3000/health').then((r) => process.exit(r.ok ? 0 : 1), () => process.exit(1))"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
