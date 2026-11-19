@@ -2,7 +2,10 @@
 import { main } from './cli.js';
 
 const controller = new AbortController();
-process.once('SIGINT', () => controller.abort());
+// SIGTERM нужен для Docker (`docker stop`): без обработчика PID 1 его игнорирует.
+for (const signal of ['SIGINT', 'SIGTERM'] as const) {
+  process.once(signal, () => controller.abort());
+}
 
 main(process.argv.slice(2), undefined, controller.signal).then(
   (code) => {
