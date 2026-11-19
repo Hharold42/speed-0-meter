@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # --- Сборка TypeScript ---
-FROM node:24-alpine AS build
+FROM node:26-alpine AS build
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
@@ -12,7 +12,7 @@ RUN npm run build \
     && rm -rf dist/testing
 
 # --- Рантайм: только скомпилированный код и статика, зависимостей нет ---
-FROM node:24-alpine
+FROM node:26-alpine
 ENV NODE_ENV=production
 WORKDIR /app
 COPY package.json ./
